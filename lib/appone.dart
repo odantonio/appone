@@ -1,4 +1,4 @@
-import 'package:appone/pages/login_page.dart';
+import 'package:appone/pages/dio_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
           /// PrimarySwatch cuida de alterar a cor do AppBar(),
           primarySwatch: Colors.indigo,
           textTheme: GoogleFonts.robotoTextTheme()),
-      home: const LoginPage(),
+      home: const DioLoginPage(),
     );
   }
 }
