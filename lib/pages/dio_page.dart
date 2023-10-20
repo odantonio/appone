@@ -1,3 +1,6 @@
+import 'package:appone/pages/cadastro_page.dart';
+import 'package:appone/pages/main_page.dart';
+import 'package:appone/pages/recuperar_senha_page.dart';
 import 'package:flutter/material.dart';
 
 class DioLoginPage extends StatefulWidget {
@@ -201,6 +204,11 @@ class _DioLoginPageState extends State<DioLoginPage> {
                                         const SnackBar(
                                             content: Text(
                                                 "Login Realisado com Sucesso!")));
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const MainPage()));
                                   } else {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         const SnackBar(
@@ -220,28 +228,46 @@ class _DioLoginPageState extends State<DioLoginPage> {
                     ],
                   ),
                 ),
-                const Expanded(
+                Expanded(
                     flex: 2,
                     child: Column(
                       children: [
-                        Padding(
-                          padding: EdgeInsets.only(top: 8.0),
-                          child: Text(
-                            "Esqueci Minha Senha",
-                            style: TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.normal,
-                                color: Color.fromARGB(255, 183, 183, 65)),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const RecuperaPage()));
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.only(top: 8.0),
+                            child: Text(
+                              "Esqueci Minha Senha",
+                              style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.normal,
+                                  color: Color.fromARGB(255, 183, 183, 65)),
+                            ),
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            "Criar Conta",
-                            style: TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.normal,
-                                color: Color.fromARGB(255, 23, 142, 27)),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const CadastroPage()));
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              "Criar Conta",
+                              style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.normal,
+                                  color: Color.fromARGB(255, 23, 142, 27)),
+                            ),
                           ),
                         ),
                       ],
