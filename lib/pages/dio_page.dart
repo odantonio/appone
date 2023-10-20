@@ -8,6 +8,16 @@ class DioLoginPage extends StatefulWidget {
 }
 
 class _DioLoginPageState extends State<DioLoginPage> {
+  // TextEditingControler
+  // sempre instanciar
+  // usado para armazenar o valor de uma variável.
+  final TextEditingController _emailController =
+      TextEditingController(text: "email@email.com");
+  final TextEditingController _senhaController = TextEditingController();
+
+  /// visibilityOption inicia como TRUE, pois o componente por padrão oculta a senha
+  bool visibilityOption = true;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -66,17 +76,21 @@ class _DioLoginPageState extends State<DioLoginPage> {
                         margin: const EdgeInsets.symmetric(
                             horizontal: 16.0, vertical: 2.0),
                         //alignment: Alignment.center,
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 4.0),
                           child: SizedBox(
                             height: 24,
                             child: TextField(
-                              style: TextStyle(
+                              controller: _emailController,
+                              onChanged: (value) {
+                                debugPrint("O que está sendo digitado: $value");
+                              },
+                              style: const TextStyle(
                                   color: Color.fromARGB(255, 216, 209, 209),
                                   fontSize: 12,
                                   fontWeight: FontWeight.normal),
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 enabledBorder: UnderlineInputBorder(
                                     borderSide:
                                         BorderSide(color: Colors.white)),
@@ -98,29 +112,61 @@ class _DioLoginPageState extends State<DioLoginPage> {
                         margin: const EdgeInsets.symmetric(
                             horizontal: 16.0, vertical: 2.0),
                         //alignment: Alignment.center,
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 4.0),
                           child: SizedBox(
                             height: 30,
                             child: TextField(
-                              style: TextStyle(
+                              // o texto é ou não visivel dependendo de visibilityOption
+                              obscureText: visibilityOption,
+                              controller: _senhaController,
+                              onChanged: (value) {
+                                debugPrint("O que está sendo digitado: $value");
+                              },
+                              style: const TextStyle(
                                   fontSize: 12,
                                   color: Color.fromARGB(255, 216, 209, 209)),
                               decoration: InputDecoration(
-                                enabledBorder: UnderlineInputBorder(
+                                enabledBorder: const UnderlineInputBorder(
                                     borderSide:
                                         BorderSide(color: Colors.white)),
-                                focusedBorder: UnderlineInputBorder(
+                                focusedBorder: const UnderlineInputBorder(
                                     borderSide:
                                         BorderSide(color: Colors.white)),
                                 hintText: "Senha",
-                                hintStyle: TextStyle(
+                                hintStyle: const TextStyle(
                                     color: Colors.white, fontSize: 14),
-                                prefixIcon: Icon(Icons.lock_outline,
+                                prefixIcon: const Icon(Icons.lock_outline,
                                     color: Color.fromARGB(255, 144, 7, 164)),
-                                suffixIcon: Icon(Icons.visibility_off_outlined,
-                                    color: Color.fromARGB(255, 144, 7, 164)),
+
+                                /// Método 1 - InkWell
+                                ///
+                                suffixIcon: InkWell(
+                                  onTap: () {
+                                    // Com o setState, ao clicar no ícone o estado é alterado
+                                    setState(() {
+                                      visibilityOption = !visibilityOption;
+                                    });
+                                  },
+
+                                  /// Método 2 - GestureDetector
+                                  ///
+                                  /// O GestureDetector possui uma gama de propriedades muito maior
+                                  ///
+                                  // suffix: GestureDetector(
+                                  //   onTap: () {
+                                  //     setState(() {
+                                  //       visibilityOption = !visibilityOption;
+                                  //     });
+                                  //   },
+                                  child: Icon(
+                                      visibilityOption
+                                          ? Icons.visibility_off_outlined
+                                          : Icons.visibility,
+                                      color: const Color.fromARGB(
+                                          255, 144, 7, 164)),
+                                ),
                               ),
                             ),
                           ),
@@ -147,7 +193,26 @@ class _DioLoginPageState extends State<DioLoginPage> {
                                             255, 90, 104, 184)),
                                     foregroundColor: MaterialStateProperty.all(
                                         Colors.white)),
-                                onPressed: () {},
+                                onPressed: () {
+                                  if (_emailController.text !=
+                                          "email@email.com" &&
+                                      _senhaController.text != "") {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content: Text(
+                                                "Login Realisado com Sucesso!")));
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content: Text(
+                                                "Falha ao realisar login")));
+                                  }
+                                  // Lendo os valores dos controllers com o método .text
+                                  debugPrint(
+                                      "Controle do email: ${_emailController.text}");
+                                  debugPrint(
+                                      "Controle da senha: ${_senhaController.text}");
+                                },
                                 child: const Text("Entrar")),
                           ),
                         ),
