@@ -43,6 +43,7 @@ class _DioLoginPageState extends State<DioLoginPage> {
                   padding:
                       EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
                   child: SizedBox(
+                    //width: 200,
                     child: Image(
                       image: NetworkImage(
                           "https://hermes.digitalinnovation.one/assets/diome/logo.png",
@@ -83,7 +84,7 @@ class _DioLoginPageState extends State<DioLoginPage> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 4.0),
                           child: SizedBox(
-                            height: 24,
+                            height: 30,
                             child: TextField(
                               controller: _emailController,
                               onChanged: (value) {
